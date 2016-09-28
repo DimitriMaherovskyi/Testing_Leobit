@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeoQuiz.Web", "LeoQuiz\LeoQuiz.Web.csproj", "{EBC2CBC1-27D4-451D-A8EE-1D722ED53C5D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeoQuiz.Tests", "LeoQuiz.Tests\LeoQuiz.Tests.csproj", "{03811EE9-908A-4AF9-AA43-1D7A478214E2}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "LeoQuiz.Database", "LeoQuiz.Database\LeoQuiz.Database.sqlproj", "{E37CF2B1-027A-4CBB-A435-38A7A873AE59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeoQuiz.Repositories", "LeoQuiz.Repositories\LeoQuiz.Repositories.csproj", "{787C2A75-99DD-43C4-92AD-94D7258ECE84}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EBC2CBC1-27D4-451D-A8EE-1D722ED53C5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBC2CBC1-27D4-451D-A8EE-1D722ED53C5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBC2CBC1-27D4-451D-A8EE-1D722ED53C5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBC2CBC1-27D4-451D-A8EE-1D722ED53C5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03811EE9-908A-4AF9-AA43-1D7A478214E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03811EE9-908A-4AF9-AA43-1D7A478214E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03811EE9-908A-4AF9-AA43-1D7A478214E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03811EE9-908A-4AF9-AA43-1D7A478214E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E37CF2B1-027A-4CBB-A435-38A7A873AE59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E37CF2B1-027A-4CBB-A435-38A7A873AE59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E37CF2B1-027A-4CBB-A435-38A7A873AE59}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{E37CF2B1-027A-4CBB-A435-38A7A873AE59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E37CF2B1-027A-4CBB-A435-38A7A873AE59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E37CF2B1-027A-4CBB-A435-38A7A873AE59}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{787C2A75-99DD-43C4-92AD-94D7258ECE84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{787C2A75-99DD-43C4-92AD-94D7258ECE84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{787C2A75-99DD-43C4-92AD-94D7258ECE84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{787C2A75-99DD-43C4-92AD-94D7258ECE84}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
