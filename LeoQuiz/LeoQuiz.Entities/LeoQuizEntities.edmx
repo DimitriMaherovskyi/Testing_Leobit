@@ -1,0 +1,472 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="LeoQuizModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblTest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" Nullable="false" />
+          <Property Name="TestTimeLimit" Type="int" />
+          <Property Name="QuestionTimeLimit" Type="int" />
+        </EntityType>
+        <EntityType Name="tblTestAnswer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TestQuestionId" Type="int" Nullable="false" />
+          <Property Name="AnswerHTML" Type="varchar(max)" Nullable="false" />
+          <Property Name="IsCorrect" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblTestingResult">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TestingURLId" Type="int" Nullable="false" />
+          <Property Name="TestingStart" Type="datetime" Nullable="false" />
+          <Property Name="TestingEnd" Type="datetime" Nullable="false" />
+          <Property Name="QuestionsTried" Type="int" Nullable="false" />
+          <Property Name="CorrectAnswers" Type="int" Nullable="false" />
+          <Property Name="Score" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblTestingResultAnswer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TestingResultId" Type="int" Nullable="false" />
+          <Property Name="TestQuestionId" Type="int" Nullable="false" />
+          <Property Name="TestAnswersSelected" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblTestingURL">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TestId" Type="int" Nullable="false" />
+          <Property Name="AllowedStartDate" Type="date" />
+          <Property Name="AllowedEndDate" Type="date" />
+          <Property Name="NumberOfRuns" Type="int" />
+        </EntityType>
+        <EntityType Name="tblTestQuestion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TestId" Type="int" Nullable="false" />
+          <Property Name="QuestionHTML" Type="varchar(max)" Nullable="false" />
+          <Property Name="TestHintHTML" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tblTestAnswer_TestQuestionId">
+          <End Role="tblTestQuestion" Type="Self.tblTestQuestion" Multiplicity="1" />
+          <End Role="tblTestAnswer" Type="Self.tblTestAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTestQuestion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblTestAnswer">
+              <PropertyRef Name="TestQuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTestingResult_TestingURLId">
+          <End Role="tblTestingURL" Type="Self.tblTestingURL" Multiplicity="1" />
+          <End Role="tblTestingResult" Type="Self.tblTestingResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTestingURL">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblTestingResult">
+              <PropertyRef Name="TestingURLId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTestingResultAnswer_TestingResultId">
+          <End Role="tblTestingResult" Type="Self.tblTestingResult" Multiplicity="1" />
+          <End Role="tblTestingResultAnswer" Type="Self.tblTestingResultAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTestingResult">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblTestingResultAnswer">
+              <PropertyRef Name="TestingResultId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTestingResultAnswer_TestQuestionId">
+          <End Role="tblTestQuestion" Type="Self.tblTestQuestion" Multiplicity="1" />
+          <End Role="tblTestingResultAnswer" Type="Self.tblTestingResultAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTestQuestion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblTestingResultAnswer">
+              <PropertyRef Name="TestQuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTestingURL_TestId">
+          <End Role="tblTest" Type="Self.tblTest" Multiplicity="1" />
+          <End Role="tblTestingURL" Type="Self.tblTestingURL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTest">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblTestingURL">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTestQuestion_TestId">
+          <End Role="tblTest" Type="Self.tblTest" Multiplicity="1" />
+          <End Role="tblTestQuestion" Type="Self.tblTestQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTest">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblTestQuestion">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LeoQuizModelStoreContainer">
+          <EntitySet Name="tblTest" EntityType="Self.tblTest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTestAnswer" EntityType="Self.tblTestAnswer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTestingResult" EntityType="Self.tblTestingResult" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTestingResultAnswer" EntityType="Self.tblTestingResultAnswer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTestingURL" EntityType="Self.tblTestingURL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTestQuestion" EntityType="Self.tblTestQuestion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUser" EntityType="Self.tblUser" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblTestAnswer_TestQuestionId" Association="Self.FK_tblTestAnswer_TestQuestionId">
+            <End Role="tblTestQuestion" EntitySet="tblTestQuestion" />
+            <End Role="tblTestAnswer" EntitySet="tblTestAnswer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTestingResult_TestingURLId" Association="Self.FK_tblTestingResult_TestingURLId">
+            <End Role="tblTestingURL" EntitySet="tblTestingURL" />
+            <End Role="tblTestingResult" EntitySet="tblTestingResult" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTestingResultAnswer_TestingResultId" Association="Self.FK_tblTestingResultAnswer_TestingResultId">
+            <End Role="tblTestingResult" EntitySet="tblTestingResult" />
+            <End Role="tblTestingResultAnswer" EntitySet="tblTestingResultAnswer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTestingResultAnswer_TestQuestionId" Association="Self.FK_tblTestingResultAnswer_TestQuestionId">
+            <End Role="tblTestQuestion" EntitySet="tblTestQuestion" />
+            <End Role="tblTestingResultAnswer" EntitySet="tblTestingResultAnswer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTestingURL_TestId" Association="Self.FK_tblTestingURL_TestId">
+            <End Role="tblTest" EntitySet="tblTest" />
+            <End Role="tblTestingURL" EntitySet="tblTestingURL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTestQuestion_TestId" Association="Self.FK_tblTestQuestion_TestId">
+            <End Role="tblTest" EntitySet="tblTest" />
+            <End Role="tblTestQuestion" EntitySet="tblTestQuestion" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LeoQuizModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Test">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TestTimeLimit" Type="Int32" />
+          <Property Name="QuestionTimeLimit" Type="Int32" />
+          <NavigationProperty Name="TestingURL" Relationship="Self.FK_tblTestingURL_TestId" FromRole="tblTest" ToRole="tblTestingURL" />
+          <NavigationProperty Name="TestQuestion" Relationship="Self.FK_tblTestQuestion_TestId" FromRole="tblTest" ToRole="tblTestQuestion" />
+        </EntityType>
+        <EntityType Name="TestAnswer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TestQuestionId" Type="Int32" Nullable="false" />
+          <Property Name="AnswerHTML" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsCorrect" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="TestQuestion" Relationship="Self.FK_tblTestAnswer_TestQuestionId" FromRole="tblTestAnswer" ToRole="tblTestQuestion" />
+        </EntityType>
+        <EntityType Name="TestingResult">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TestingURLId" Type="Int32" Nullable="false" />
+          <Property Name="TestingStart" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TestingEnd" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="QuestionsTried" Type="Int32" Nullable="false" />
+          <Property Name="CorrectAnswers" Type="Int32" Nullable="false" />
+          <Property Name="Score" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TestingURL" Relationship="Self.FK_tblTestingResult_TestingURLId" FromRole="tblTestingResult" ToRole="tblTestingURL" />
+          <NavigationProperty Name="TestingResultAnswer" Relationship="Self.FK_tblTestingResultAnswer_TestingResultId" FromRole="tblTestingResult" ToRole="tblTestingResultAnswer" />
+        </EntityType>
+        <EntityType Name="TestingResultAnswer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TestingResultId" Type="Int32" Nullable="false" />
+          <Property Name="TestQuestionId" Type="Int32" Nullable="false" />
+          <Property Name="TestAnswersSelected" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TestingResult" Relationship="Self.FK_tblTestingResultAnswer_TestingResultId" FromRole="tblTestingResultAnswer" ToRole="tblTestingResult" />
+          <NavigationProperty Name="TestQuestion" Relationship="Self.FK_tblTestingResultAnswer_TestQuestionId" FromRole="tblTestingResultAnswer" ToRole="tblTestQuestion" />
+        </EntityType>
+        <EntityType Name="TestingURL">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TestId" Type="Int32" Nullable="false" />
+          <Property Name="AllowedStartDate" Type="DateTime" Precision="0" />
+          <Property Name="AllowedEndDate" Type="DateTime" Precision="0" />
+          <Property Name="NumberOfRuns" Type="Int32" />
+          <NavigationProperty Name="Test" Relationship="Self.FK_tblTestingURL_TestId" FromRole="tblTestingURL" ToRole="tblTest" />
+          <NavigationProperty Name="TestingResult" Relationship="Self.FK_tblTestingResult_TestingURLId" FromRole="tblTestingURL" ToRole="tblTestingResult" />
+        </EntityType>
+        <EntityType Name="TestQuestion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TestId" Type="Int32" Nullable="false" />
+          <Property Name="QuestionHTML" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TestHintHTML" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Test" Relationship="Self.FK_tblTestQuestion_TestId" FromRole="tblTestQuestion" ToRole="tblTest" />
+          <NavigationProperty Name="TestAnswer" Relationship="Self.FK_tblTestAnswer_TestQuestionId" FromRole="tblTestQuestion" ToRole="tblTestAnswer" />
+          <NavigationProperty Name="TestingResultAnswer" Relationship="Self.FK_tblTestingResultAnswer_TestQuestionId" FromRole="tblTestQuestion" ToRole="tblTestingResultAnswer" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tblTestingURL_TestId">
+          <End Role="tblTest" Type="LeoQuizModel.Test" Multiplicity="1" />
+          <End Role="tblTestingURL" Type="LeoQuizModel.TestingURL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTest">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblTestingURL">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTestQuestion_TestId">
+          <End Role="tblTest" Type="LeoQuizModel.Test" Multiplicity="1" />
+          <End Role="tblTestQuestion" Type="LeoQuizModel.TestQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTest">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblTestQuestion">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTestAnswer_TestQuestionId">
+          <End Role="tblTestQuestion" Type="LeoQuizModel.TestQuestion" Multiplicity="1" />
+          <End Role="tblTestAnswer" Type="LeoQuizModel.TestAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTestQuestion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblTestAnswer">
+              <PropertyRef Name="TestQuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTestingResult_TestingURLId">
+          <End Role="tblTestingURL" Type="LeoQuizModel.TestingURL" Multiplicity="1" />
+          <End Role="tblTestingResult" Type="LeoQuizModel.TestingResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTestingURL">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblTestingResult">
+              <PropertyRef Name="TestingURLId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTestingResultAnswer_TestingResultId">
+          <End Role="tblTestingResult" Type="LeoQuizModel.TestingResult" Multiplicity="1" />
+          <End Role="tblTestingResultAnswer" Type="LeoQuizModel.TestingResultAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTestingResult">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblTestingResultAnswer">
+              <PropertyRef Name="TestingResultId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTestingResultAnswer_TestQuestionId">
+          <End Role="tblTestQuestion" Type="LeoQuizModel.TestQuestion" Multiplicity="1" />
+          <End Role="tblTestingResultAnswer" Type="LeoQuizModel.TestingResultAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTestQuestion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblTestingResultAnswer">
+              <PropertyRef Name="TestQuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LeoQuiz_Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblTest" EntityType="LeoQuizModel.Test" />
+          <EntitySet Name="tblTestAnswer" EntityType="LeoQuizModel.TestAnswer" />
+          <EntitySet Name="tblTestingResult" EntityType="LeoQuizModel.TestingResult" />
+          <EntitySet Name="tblTestingResultAnswer" EntityType="LeoQuizModel.TestingResultAnswer" />
+          <EntitySet Name="tblTestingURL" EntityType="LeoQuizModel.TestingURL" />
+          <EntitySet Name="tblTestQuestion" EntityType="LeoQuizModel.TestQuestion" />
+          <EntitySet Name="tblUser" EntityType="LeoQuizModel.User" />
+          <AssociationSet Name="FK_tblTestingURL_TestId" Association="Self.FK_tblTestingURL_TestId">
+            <End Role="tblTest" EntitySet="tblTest" />
+            <End Role="tblTestingURL" EntitySet="tblTestingURL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTestQuestion_TestId" Association="Self.FK_tblTestQuestion_TestId">
+            <End Role="tblTest" EntitySet="tblTest" />
+            <End Role="tblTestQuestion" EntitySet="tblTestQuestion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTestAnswer_TestQuestionId" Association="Self.FK_tblTestAnswer_TestQuestionId">
+            <End Role="tblTestQuestion" EntitySet="tblTestQuestion" />
+            <End Role="tblTestAnswer" EntitySet="tblTestAnswer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTestingResult_TestingURLId" Association="Self.FK_tblTestingResult_TestingURLId">
+            <End Role="tblTestingURL" EntitySet="tblTestingURL" />
+            <End Role="tblTestingResult" EntitySet="tblTestingResult" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTestingResultAnswer_TestingResultId" Association="Self.FK_tblTestingResultAnswer_TestingResultId">
+            <End Role="tblTestingResult" EntitySet="tblTestingResult" />
+            <End Role="tblTestingResultAnswer" EntitySet="tblTestingResultAnswer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTestingResultAnswer_TestQuestionId" Association="Self.FK_tblTestingResultAnswer_TestQuestionId">
+            <End Role="tblTestQuestion" EntitySet="tblTestQuestion" />
+            <End Role="tblTestingResultAnswer" EntitySet="tblTestingResultAnswer" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LeoQuizModelStoreContainer" CdmEntityContainer="LeoQuiz_Entities">
+          <EntitySetMapping Name="tblTest">
+            <EntityTypeMapping TypeName="LeoQuizModel.Test">
+              <MappingFragment StoreEntitySet="tblTest">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TestTimeLimit" ColumnName="TestTimeLimit" />
+                <ScalarProperty Name="QuestionTimeLimit" ColumnName="QuestionTimeLimit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTestAnswer">
+            <EntityTypeMapping TypeName="LeoQuizModel.TestAnswer">
+              <MappingFragment StoreEntitySet="tblTestAnswer">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TestQuestionId" ColumnName="TestQuestionId" />
+                <ScalarProperty Name="AnswerHTML" ColumnName="AnswerHTML" />
+                <ScalarProperty Name="IsCorrect" ColumnName="IsCorrect" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTestingResult">
+            <EntityTypeMapping TypeName="LeoQuizModel.TestingResult">
+              <MappingFragment StoreEntitySet="tblTestingResult">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TestingURLId" ColumnName="TestingURLId" />
+                <ScalarProperty Name="TestingStart" ColumnName="TestingStart" />
+                <ScalarProperty Name="TestingEnd" ColumnName="TestingEnd" />
+                <ScalarProperty Name="QuestionsTried" ColumnName="QuestionsTried" />
+                <ScalarProperty Name="CorrectAnswers" ColumnName="CorrectAnswers" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTestingResultAnswer">
+            <EntityTypeMapping TypeName="LeoQuizModel.TestingResultAnswer">
+              <MappingFragment StoreEntitySet="tblTestingResultAnswer">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TestingResultId" ColumnName="TestingResultId" />
+                <ScalarProperty Name="TestQuestionId" ColumnName="TestQuestionId" />
+                <ScalarProperty Name="TestAnswersSelected" ColumnName="TestAnswersSelected" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTestingURL">
+            <EntityTypeMapping TypeName="LeoQuizModel.TestingURL">
+              <MappingFragment StoreEntitySet="tblTestingURL">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TestId" ColumnName="TestId" />
+                <ScalarProperty Name="AllowedStartDate" ColumnName="AllowedStartDate" />
+                <ScalarProperty Name="AllowedEndDate" ColumnName="AllowedEndDate" />
+                <ScalarProperty Name="NumberOfRuns" ColumnName="NumberOfRuns" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTestQuestion">
+            <EntityTypeMapping TypeName="LeoQuizModel.TestQuestion">
+              <MappingFragment StoreEntitySet="tblTestQuestion">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TestId" ColumnName="TestId" />
+                <ScalarProperty Name="QuestionHTML" ColumnName="QuestionHTML" />
+                <ScalarProperty Name="TestHintHTML" ColumnName="TestHintHTML" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUser">
+            <EntityTypeMapping TypeName="LeoQuizModel.User">
+              <MappingFragment StoreEntitySet="tblUser">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

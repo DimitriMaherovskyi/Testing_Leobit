@@ -11,6 +11,8 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "LeoQuiz.Database", "LeoQuiz
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeoQuiz.Repositories", "LeoQuiz.Repositories\LeoQuiz.Repositories.csproj", "{787C2A75-99DD-43C4-92AD-94D7258ECE84}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeoQuiz.Entities", "LeoQuiz.Entities\LeoQuiz.Entities.csproj", "{E7895D96-52C3-4807-A315-0901CFB76388}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{787C2A75-99DD-43C4-92AD-94D7258ECE84}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{787C2A75-99DD-43C4-92AD-94D7258ECE84}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{787C2A75-99DD-43C4-92AD-94D7258ECE84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7895D96-52C3-4807-A315-0901CFB76388}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7895D96-52C3-4807-A315-0901CFB76388}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7895D96-52C3-4807-A315-0901CFB76388}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7895D96-52C3-4807-A315-0901CFB76388}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
